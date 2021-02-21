@@ -14,6 +14,19 @@
 <div class="card">
     <div class="card-header">
       {{-- <h3 class="card-title">DataTable with minimal features & hover style</h3> --}}
+      @if ($message = Session::get('success'))
+      <div class="alert alert-success alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button>	
+        <strong>{{ $message }}</strong>
+      </div>
+    @endif
+
+    @if ($message = Session::get('error'))
+      <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>	
+      <strong>{{ $message }}</strong>
+      </div>
+    @endif
       <a href="{{url("/informasi/create")}}" class="btn btn-primary active float-left" role="button"
       > <i class="fa fa-plus"></i> Tambah Data</a>
     </div>
@@ -105,7 +118,7 @@
                 {data: 'gambar', name: 'gambar', render: function(data,type, full, meta){
                   return "<img src=" + data + " class='thumbnail'/>";
                 }},
-                {data: 'deskripsi', name: 'deskripsi'},
+                {data: 'deskripsi', name: 'deskripsi', width: '50%'},
                 {data: 'contact', name: 'contact'},
                 {data: 'alamat', name: 'alamat'},
                 {data: 'kategori', name: 'kategori'},

@@ -8,6 +8,19 @@
       </div>
       <!-- /.card-header -->
       <!-- form start -->
+      @if ($message = Session::get('success'))
+      <div class="alert alert-success alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button>	
+        <strong>{{ $message }}</strong>
+      </div>
+    @endif
+
+    @if ($message = Session::get('error'))
+      <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>	
+      <strong>{{ $message }}</strong>
+      </div>
+    @endif
       <form method="POST" action="{{url()->current()}}" enctype="multipart/form-data">
           @csrf
         <div class="card-body">

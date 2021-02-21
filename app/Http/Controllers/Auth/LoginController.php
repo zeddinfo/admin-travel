@@ -29,7 +29,14 @@ class LoginController extends Controller
                 Session::put('name', $data[0]->nama);
                 Session::put('username', $data[0]->username);
                 Session::put('login', TRUE);
-                
+
+                if (Session::get('previousUrl')) {
+                    if ($redirect = Session::get('previousUrl')) {
+                        Session::forget('previousUrl');
+
+                        return Redirect::to($redirect);
+                    }
+                }        
                 toastr()->success('Authentikasi Berhasil');
                 return redirect('/admin');
             }
@@ -37,6 +44,6 @@ class LoginController extends Controller
             return redirect('/login')->with(['error' => 'Username atau Password Salah']);
         }
         // toastr()->danger('Username atau Password Salah');
-        return view('admin.auth');
+        return view('admin.auth')->with(['error' => 'User tidak ditemukan']);
     }
 }

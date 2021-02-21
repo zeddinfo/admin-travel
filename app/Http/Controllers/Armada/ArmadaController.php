@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Armada;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Armada\ArmadaModel;
+use App\Models\Kategori\KategoriModel;
 use DB;
 
 class ArmadaController extends Controller
@@ -16,6 +17,7 @@ class ArmadaController extends Controller
     
     public function create(Request $request){
         $model = new ArmadaModel();
+        $kategori = KategoriModel::get();
         $title = 'Buat Armada Baru';
 
         if($request->isMethod('post')){
@@ -45,12 +47,13 @@ class ArmadaController extends Controller
                 return $e;
             }
         }
-        return view('armada.forminput', compact('title', 'model'));
+        return view('armada.forminput', compact('title', 'model', 'kategori'));
     }
 
     public function update(Request $request){
         $model = ArmadaModel::query()->where(['id' => $request->id])->first();
         $title = 'Update Armada';
+        $kategori = KategoriModel::get();
 
         if($request->isMethod('post')){
             DB::beginTransaction();
@@ -78,7 +81,7 @@ class ArmadaController extends Controller
                 return $e;
             }
         }
-        return view('armada.forminput', compact('title', 'model'));
+        return view('armada.forminput', compact('title', 'model', 'kategori'));
     }
 
     public function delete($id){

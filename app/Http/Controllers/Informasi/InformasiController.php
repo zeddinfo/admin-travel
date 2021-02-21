@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Informasi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Informasi\InfoModel;
+use App\Models\Kategori\KategoriModel;
 use DB; 
 // use Carbon\Carbon;
 use Storage;
@@ -17,6 +18,7 @@ class InformasiController extends Controller
     }
     public function create(Request $request){
         $model = new InfoModel();
+        $kategori = KategoriModel::get();
         // dd($model);
         $title = 'Buat Informasi Baru';
 
@@ -55,13 +57,13 @@ class InformasiController extends Controller
             }
         }
 
-        return view('informasi.forminput', compact('title', 'model'));
+        return view('informasi.forminput', compact('title', 'model', 'kategori'));
     }
 
     public function update(Request $request){
         $model = InfoModel::query()->where(['id' => $request->id])->first();
         $title = 'Update Informasi';
-        
+        $kategori = KategoriModel::get();
         if($request->isMethod('post')){
             DB::beginTransaction();
             try{
@@ -93,7 +95,7 @@ class InformasiController extends Controller
                 return $e;
             }
         }
-        return view('informasi.forminput', compact('title', 'model'));
+        return view('informasi.forminput', compact('title', 'model', 'kategori'));
     }
 
     public function delete($id){

@@ -9,6 +9,19 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>	
+      <strong>{{ $message }}</strong>
+    </div>
+  @endif
+
+  @if ($message = Session::get('error'))
+    <div class="alert alert-danger alert-block">
+      <button type="button" class="close" data-dismiss="alert">×</button>	
+    <strong>{{ $message }}</strong>
+    </div>
+  @endif
     <form method="POST" action="{{url()->current()}}" enctype="multipart/form-data">
         @csrf
       <div class="card-body">
@@ -29,10 +42,10 @@
         <div class="form-group">
             <label for="exampleInputPassword1">Kategori Informasi</label>
             <select class="form-control col-md-5" aria-label="Default select example" name="kategori">
-                <option selected="selected">{{isset($model) && $model->id_kategori ? $model->id_kategori : 'Silahkan Pilih Kategori'}}</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+              <option selected="selected">{{isset($model) && $model->id_kategori ? $model->kategori->nama : 'Silahkan Pilih Kategori'}}</option>
+                @foreach ($kategori as $item)
+                  <option value="{{$item->id}}">{{$item->nama}}</option>
+                @endforeach
               </select>
         </div>
         
